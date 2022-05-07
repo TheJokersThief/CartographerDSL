@@ -8,6 +8,25 @@ local executors = dsl.circleci.executors;
 
 local executor_auth = {username: 'mydockerhub-user', password: '$DOCKERHUB_PASSWORD'};
 
+local environments = ['staging', 'production'];
+
+local environment_jobs = [
+    jobs.new(
+        'deploy-%s' % [environment],
+        executor_type="docker",
+        executor_options=[
+            executors.options.docker.new("ubuntu:14.04", auth=executor_auth),
+        ],
+        working_directory = '/tmp/my-project',
+        steps = [
+            steps.run(
+                name='Deploy if tests pass and branch is %s' % [environment],
+                command='ansible-playbook site.yml -i %s' % [environment],
+            )
+        ],
+    ) for environment in environments
+];
+
 pipeline.new(
     jobs = [
         jobs.new(
@@ -28,56 +47,26 @@ pipeline.new(
                 steps.run(|||
                     sudo -u root createuser -h localhost --superuser ubuntu &&
                     sudo createdb -h localhost test_db
-            |||),
+                |||),
                 steps.restore_cache(['v1-my-project-{{ checksum "project.clj" }}', 'v1-my-project-']),
                 steps.run(environment={'SSH_TARGET': 'localhost', 'TEST_ENV': 'linux'}, command=|||
                     set -xu
                     mkdir -p ${TEST_REPORTS}
                     run-tests.sh
                     cp out/tests/*.xml ${TEST_REPORTS}
-            |||),
+                |||),
                 steps.run(|||
                     set -xu
                     mkdir -p /tmp/artifacts
                     create_jars.sh << pipeline.number >>
                     cp *.jar /tmp/artifacts
-            |||),
+                |||),
                 steps.save_cache(key='v1-my-project-{{ checksum "project.clj" }}', paths=['~/.m2']),
                 steps.store_artifacts(path='/tmp/artifacts', destination='build'),
                 steps.store_test_results('/tmp/test-reports')
             ],
         ),
-
-        jobs.new(
-            'deploy-staging',
-            executor_type="docker",
-            executor_options=[
-                executors.options.docker.new("ubuntu:14.04", auth=executor_auth),
-            ],
-            working_directory = '/tmp/my-project',
-            steps = [
-                steps.run(
-                    name='Deploy if tests pass and branch is Staging',
-                    command='ansible-playbook site.yml -i staging'
-                )
-            ],
-        ),
-
-        jobs.new(
-            'deploy-production',
-            executor_type="docker",
-            executor_options=[
-                executors.options.docker.new("ubuntu:14.04", auth=executor_auth),
-            ],
-            working_directory = '/tmp/my-project',
-            steps = [
-                steps.run(
-                    name='Deploy if tests pass and branch is Production',
-                    command='ansible-playbook site.yml -i production'
-                )
-            ],
-        ),
-    ],
+    ] + environment_jobs,
     workflows = [
         workflows.new(
             name = "build-deploy",
