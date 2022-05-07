@@ -1,4 +1,4 @@
-local dsl = import "_dsl.libsonnet";
+local dsl = import '_dsl.libsonnet';
 
 {
     blah: dsl.test,

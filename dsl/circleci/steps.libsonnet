@@ -6,14 +6,14 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     run(
         command,
-        name = null,
-        shell = null,
-        environment = {},
-        background = false,
-        working_directory = '.',
-        no_output_timeout = '10m',
-        when = 'on_success',
-    ) ::
+        name=null,
+        shell=null,
+        environment={},
+        background=false,
+        working_directory='.',
+        no_output_timeout='10m',
+        when='on_success',
+    )::
         assert std.member(valid_when_enum, when) : 'steps.run: when must be one of ' + valid_when_enum;
 
         {
@@ -31,8 +31,8 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     when(
         condition,
-        steps = [],
-    ) ::
+        steps=[],
+    )::
         {
             when: {
                 condition: condition,
@@ -40,16 +40,16 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
             },
         },
 
-    unless(condition, steps) ::
+    unless(condition, steps)::
         self.when(condition, steps),
 
-    checkout() ::
+    checkout()::
         'checkout',
 
     setup_remote_docker(
-        docker_layer_caching = false,
-        version = '17.09.0-ce',
-    ) ::
+        docker_layer_caching=false,
+        version='17.09.0-ce',
+    )::
         {
             docker_layer_caching: {
                 docker_layer_caching: docker_layer_caching,
@@ -59,10 +59,10 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     save_cache(
         key,
-        paths = [],
-        name = 'Saving Cache',
-        when = 'on_success',
-    ) ::
+        paths=[],
+        name='Saving Cache',
+        when='on_success',
+    )::
         assert std.member(valid_when_enum, when) : 'steps.save_cache: when must be one of ' + valid_when_enum;
         {
             save_cache: {
@@ -75,8 +75,8 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     restore_cache(
         keys,
-        name = 'Restoring Cache',
-    ) ::
+        name='Restoring Cache',
+    )::
         {
             restore_cache: {
                 keys: keys,
@@ -86,18 +86,18 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     store_artifacts(
         path,
-        destination = null,
-    ) ::
+        destination=null,
+    )::
         {
             store_artifacts: {
-                path: path
-            }
-            + if !util.is_empty(destination)
-                then {destination: destination}
-                else {},
+                                 path: path,
+                             }
+                             + if !util.is_empty(destination)
+                             then { destination: destination }
+                             else {},
         },
 
-    store_test_results(path) ::
+    store_test_results(path)::
         {
             store_test_results: {
                 path: path,
@@ -106,8 +106,8 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
 
     persist_to_workspace(
         root,
-        paths = [],
-    ) ::
+        paths=[],
+    )::
         assert !util.is_empty(paths) : 'steps.persist_to_workspace: Missing at least 1 path';
 
         {
@@ -117,14 +117,14 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
             },
         },
 
-    attach_workspace(at) ::
+    attach_workspace(at)::
         {
             attach_workspace: {
-                at: at
+                at: at,
             },
         },
 
-    add_ssh_keys(fingerprints = []) ::
+    add_ssh_keys(fingerprints=[])::
         {
             add_ssh_keys: {
                 fingerprints: fingerprints,

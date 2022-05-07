@@ -4,11 +4,11 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
 
 {
     new(
-        version = dslVersion.new(),
-        orbs = {},
-        jobs = [],
-        workflows = [],
-    ) ::
+        version=dslVersion.new(),
+        orbs={},
+        jobs=[],
+        workflows=[],
+    )::
         version
         + orbs
         + {
@@ -16,5 +16,5 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         }
         + {
             workflows: std.foldl(foldArrayOfObjects, workflows, {}),
-        }
+        },
 }

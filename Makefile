@@ -30,6 +30,8 @@ static-analysis: lint vet errcheck verify-gofmt
 .PHONY: fmt
 fmt:
 	gofmt -s -w $(allSrcDirs)
+	find . -name *.libsonnet -exec jsonnetfmt -i -n 4 {} \;
+	find . -name *.jsonnet -exec jsonnetfmt -i -n 4 {} \;
 
 .PHONY: verify-gofmt
 verify-gofmt:

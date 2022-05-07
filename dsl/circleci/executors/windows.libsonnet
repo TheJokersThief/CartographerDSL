@@ -1,7 +1,6 @@
-
 {
-    verify(options) :: options,
+    verify(options):: options,
 
     // Windows doesn't support any options
-    new() :: {},
+    new():: {},
 }

@@ -1,11 +1,11 @@
 local constants = import 'constants.libsonnet';
+local executors = import 'executors/_executors.libsonnet';
 local jobs = import 'jobs.libsonnet';
 local orbs = import 'orbs.libsonnet';
+local pipeline = import 'pipeline.libsonnet';
 local steps = import 'steps.libsonnet';
 local version = import 'version.libsonnet';
 local workflows = import 'workflows.libsonnet';
-local pipeline = import 'pipeline.libsonnet';
-local executors = import 'executors/_executors.libsonnet';
 
 {
     constants: constants,

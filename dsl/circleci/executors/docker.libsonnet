@@ -1,22 +1,22 @@
-local util = import "../../util.libsonnet";
+local util = import '../../util.libsonnet';
 
 
 {
-    verify(images) ::
+    verify(images)::
         local list_of_images = util.as_array(images);
-        assert std.length(list_of_images) > 0 : "executor.docker.options: Must pass at least 1 image to docker executor.";
+        assert std.length(list_of_images) > 0 : 'executor.docker.options: Must pass at least 1 image to docker executor.';
         list_of_images,
 
     new(
         image,
-        name = null,
-        entrypoint = null,
-        command = null,
-        user = null,
-        environment = null,
-        auth = null,
-        aws_auth = null,
-    ) ::
+        name=null,
+        entrypoint=null,
+        command=null,
+        user=null,
+        environment=null,
+        auth=null,
+        aws_auth=null,
+    )::
         {
             image: image,
             name: name,

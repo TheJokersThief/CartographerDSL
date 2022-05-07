@@ -1,7 +1,7 @@
-local docker = import "executors/docker.libsonnet";
-local machine = import "executors/machine.libsonnet";
-local macos = import "executors/macos.libsonnet";
-local windows = import "executors/windows.libsonnet";
+local docker = import 'executors/docker.libsonnet';
+local machine = import 'executors/machine.libsonnet';
+local macos = import 'executors/macos.libsonnet';
+local windows = import 'executors/windows.libsonnet';
 
 
 local executors = {
@@ -17,10 +17,10 @@ local route_executor(executor_type, executor_options) = executors[executor_type]
 {
     default_version: 2.1,
     executor_types: [
-        "docker",
-        "machine",
-        "macos",
-        "windows"
+        'docker',
+        'machine',
+        'macos',
+        'windows',
     ],
 
     cache_vars: {
@@ -31,8 +31,8 @@ local route_executor(executor_type, executor_options) = executors[executor_type]
         Epoch: '{{ epoch }}',
         Arch: '{{ arch }}',
 
-        Checksum(filename) :: '{{ checksum "%s" }}' % [filename],
-        EnvVar(variable) :: '{{ .Environment.%s }}' % [variable],
+        Checksum(filename):: '{{ checksum "%s" }}' % [filename],
+        EnvVar(variable):: '{{ .Environment.%s }}' % [variable],
     },
 
     pipeline_values: {
@@ -52,44 +52,44 @@ local route_executor(executor_type, executor_options) = executors[executor_type]
 
     resource_class: {
         docker: {
-            small: "small",
-            medium: "medium",
-            medium_plus: "medium+",
-            large: "large",
-            xlarge: "xlarge",
-            xxlarge: "2xlarge",
-            xxlarge_plus: "2xlarge+",
+            small: 'small',
+            medium: 'medium',
+            medium_plus: 'medium+',
+            large: 'large',
+            xlarge: 'xlarge',
+            xxlarge: '2xlarge',
+            xxlarge_plus: '2xlarge+',
         },
 
         machine: {
-            medium: "medium",
-            large: "large",
-            xlarge: "xlarge",
-            xxlarge: "2xlarge",
+            medium: 'medium',
+            large: 'large',
+            xlarge: 'xlarge',
+            xxlarge: '2xlarge',
         },
 
         macos: {
-            medium: "medium",
-            macos_x86_medium_gen2: "macos.x86.medium.gen2",
-            large: "large",
-            macos_x86_metal_gen1: "macos.x86.metal.gen1",
+            medium: 'medium',
+            macos_x86_medium_gen2: 'macos.x86.medium.gen2',
+            large: 'large',
+            macos_x86_metal_gen1: 'macos.x86.metal.gen1',
         },
 
         windows: {
-            medium: "medium",
-            large: "large",
-            xlarge: "xlarge",
-            xxlarge: "2xlarge",
+            medium: 'medium',
+            large: 'large',
+            xlarge: 'xlarge',
+            xxlarge: '2xlarge',
         },
 
         gpu_linux: {
-            gpu_nvidia_small: "gpu.nvidia.small",
-            gpu_nvidia_medium: "gpu.nvidia.medium",
-            gpu_nvidia_large: "gpu.nvidia.large",
+            gpu_nvidia_small: 'gpu.nvidia.small',
+            gpu_nvidia_medium: 'gpu.nvidia.medium',
+            gpu_nvidia_large: 'gpu.nvidia.large',
         },
 
         gpu_windows: {
-            windows_gpu_nvidia_medium: "windows.gpu.nvidia.medium",
+            windows_gpu_nvidia_medium: 'windows.gpu.nvidia.medium',
         },
     },
 

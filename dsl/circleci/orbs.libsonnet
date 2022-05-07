@@ -1,8 +1,8 @@
 {
     new(
-        orbs = {},
-    ) ::
+        orbs={},
+    )::
         {
-            orbs +: orbs,
+            orbs+: orbs,
         },
 }

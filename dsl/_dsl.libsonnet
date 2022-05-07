@@ -1,6 +1,6 @@
-local circleci = import "circleci/_main.libsonnet";
+local circleci = import 'circleci/_main.libsonnet';
 
 {
     circleci: circleci,
-    test: "this is a test",
+    test: 'this is a test',
 }

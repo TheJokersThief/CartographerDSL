@@ -8,7 +8,10 @@ local workflows = dsl.circleci.workflows;
 local jobs = dsl.circleci.jobs;
 local executors = dsl.circleci.executors;
 
-local executor_auth = { username: 'mydockerhub-user', password: '$DOCKERHUB_PASSWORD' };
+local executor_auth = {
+    username: 'mydockerhub-user',
+    password: '$DOCKERHUB_PASSWORD',
+};
 
 local environments = ['staging', 'production'];
 

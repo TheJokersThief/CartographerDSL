@@ -1,20 +1,20 @@
-local util = import "../util.libsonnet";
+local util = import '../util.libsonnet';
 
 local foldArrayOfObjects(last, current) = last + std.prune(current);
 
 {
-    new(name, jobs) ::
+    new(name, jobs)::
         local list_of_jobs = util.as_array(jobs);
         { [name]: std.foldl(foldArrayOfObjects, list_of_jobs, {}) },
 
     job(
         name,
-        requires = [],
-        context = [],
-        filters = {},
-        matrix = {},
-        when = null,
-    ) ::
+        requires=[],
+        context=[],
+        filters={},
+        matrix={},
+        when=null,
+    )::
         {
             [name]: {
                 name: name,
@@ -26,11 +26,11 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         },
 
     filter_branches(
-        only = [],
-        ignore = [],
-    ) ::
+        only=[],
+        ignore=[],
+    )::
         {
-            filters +: {
+            filters+: {
                 branches: {
                     only: only,
                     ignore: ignore,
@@ -39,11 +39,11 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         },
 
     filter_tags(
-        only = [],
-        ignore = [],
-    ) ::
+        only=[],
+        ignore=[],
+    )::
         {
-            filters +: {
+            filters+: {
                 tags: {
                     only: only,
                     ignore: ignore,
@@ -52,10 +52,10 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         },
 
     matrix(
-        alias = null,
-        parameters = {},
-        exclude = [],
-    ) ::
+        alias=null,
+        parameters={},
+        exclude=[],
+    )::
         {
             matrix: {
                 parameters: parameters,
