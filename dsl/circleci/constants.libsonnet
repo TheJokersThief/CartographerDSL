@@ -24,15 +24,15 @@ local route_executor(executor_type, executor_options) = executors[executor_type]
     ],
 
     cache_vars: {
-        Branch: '{{ .Branch }}',
-        BuildNum: '{{ .BuildNum }}',
-        Revision: '{{ .Revision }}',
-        CheckoutKey: '{{ .CheckoutKey }}',
-        Epoch: '{{ epoch }}',
-        Arch: '{{ arch }}',
+        branch: '{{ .Branch }}',
+        buildNum: '{{ .BuildNum }}',
+        revision: '{{ .Revision }}',
+        checkoutKey: '{{ .CheckoutKey }}',
+        epoch: '{{ epoch }}',
+        arch: '{{ arch }}',
 
-        Checksum(filename):: '{{ checksum "%s" }}' % [filename],
-        EnvVar(variable):: '{{ .Environment.%s }}' % [variable],
+        checksum(filename):: '{{ checksum "%s" }}' % [filename],
+        envVar(variable):: '{{ .Environment.%s }}' % [variable],
     },
 
     pipeline_values: {

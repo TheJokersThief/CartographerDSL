@@ -1,42 +1,25 @@
 // References example: https://circleci.com/docs/2.0/configuration-reference/#example-full-configuration
 
-local dsl = import '_dsl.libsonnet';
-
-// DSL remapping for convenience
-local const = dsl.circleci.constants;
-local executors = dsl.circleci.executors;
-local jobs = dsl.circleci.jobs;
-local pipeline = dsl.circleci.pipeline;
-local steps = dsl.circleci.steps;
-local workflows = dsl.circleci.workflows;
-
 // Local file imports
 local cmn = import 'common.libsonnet';
-local environment_jobs = import 'environments.libsonnet';
+local dsl = cmn.dsl;
+local environment_jobs = import 'test.libsonnet';
 
-local environments = ['staging', 'production'];
-
-local environment_jobs = [
-    jobs.new(
-        'deploy-%s' % [environment],
-        executor_type="docker",
-        executor_options=[
-            executors.options.docker.new("ubuntu:14.04", auth=executor_auth),
-        ],
-        working_directory = '/tmp/my-project',
-        steps = [
-            steps.run(
-                name='Deploy if tests pass and branch is %s' % [environment],
-                command='ansible-playbook site.yml -i %s' % [environment],
-            )
-        ],
-    ) for environment in environments
-];
+// DSL remapping for convenience
+local const = dsl.constants;
+local executors = dsl.executors;
+local jobs = dsl.jobs;
+local pipeline = dsl.pipeline;
+local steps = dsl.steps;
+local workflows = dsl.workflows;
 
 pipeline.new(
     jobs=[
         jobs.new(
             'build',
+            environment={ TEST_REPORTS: '/tmp/test-reports' },
+            working_directory='~/%s' % [cmn.project_name],
+
             executor_type='docker',
             executor_options=[
                 executors.options.docker.new('ubuntu:14.04', auth=cmn.executor_auth),
@@ -45,8 +28,7 @@ pipeline.new(
                 executors.options.docker.new('redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673', auth=cmn.executor_auth),
                 executors.options.docker.new('rabbitmq:3.5.4', auth=cmn.executor_auth),
             ],
-            environment={ TEST_REPORTS: '/tmp/test-reports' },
-            working_directory='~/%s' % [cmn.project_name],
+
             steps=[
                 steps.checkout(),
                 steps.run('echo 127.0.0.1 devhost | sudo tee -a /etc/hosts'),

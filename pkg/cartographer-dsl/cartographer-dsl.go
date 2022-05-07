@@ -1,6 +1,8 @@
 package cartographerdsl
 
 import (
+	"path"
+
 	"github.com/google/go-jsonnet"
 	"github.com/kkyr/fig"
 	"github.com/sirupsen/logrus"
@@ -15,7 +17,7 @@ type CartographerDSL struct {
 	JsonnetVM *jsonnet.VM
 }
 
-func NewCartographerDSL() *CartographerDSL {
+func NewCartographerDSL(filename string) *CartographerDSL {
 	var cfg Config
 	err := fig.Load(&cfg, fig.Dirs(userHomeDir(), userConfDir(), "/etc/cartographer-dsl", "."))
 	if err != nil {
@@ -23,7 +25,7 @@ func NewCartographerDSL() *CartographerDSL {
 	}
 
 	return &CartographerDSL{
-		JsonnetVM: MakeVM(cfg.DSLPath),
+		JsonnetVM: MakeVM(cfg.DSLPath, path.Dir(filename)),
 	}
 }
 

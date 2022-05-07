@@ -4,10 +4,10 @@ import (
 	"github.com/google/go-jsonnet"
 )
 
-func MakeVM(dslPath string) *jsonnet.VM {
+func MakeVM(dslPath, currentFilePath string) *jsonnet.VM {
 	vm := jsonnet.MakeVM()
 
-	importer := NewCustomImporter(dslPath)
+	importer := NewCustomImporter(dslPath, currentFilePath)
 	vm.Importer(importer)
 
 	return vm
@@ -17,9 +17,9 @@ type CustomImporter struct {
 	DefaultImporter *jsonnet.FileImporter
 }
 
-func NewCustomImporter(dslPath string) *CustomImporter {
+func NewCustomImporter(dslPath, currentFilePath string) *CustomImporter {
 	return &CustomImporter{
-		DefaultImporter: &jsonnet.FileImporter{JPaths: []string{dslPath}},
+		DefaultImporter: &jsonnet.FileImporter{JPaths: []string{dslPath, currentFilePath}},
 	}
 }
 

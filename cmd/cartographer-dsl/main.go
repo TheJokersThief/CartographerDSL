@@ -13,11 +13,11 @@ type CLI struct {
 }
 
 func main() {
-	cdsl := cartographerdsl.NewCartographerDSL()
 
 	var cli CLI
 	kong.Parse(&cli)
 
+	cdsl := cartographerdsl.NewCartographerDSL(cli.File)
 	content, _ := ioutil.ReadFile(cli.File)
 	fmt.Println(cdsl.Parse(cli.File, string(content)))
 }

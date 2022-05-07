@@ -1,3 +1,12 @@
+local cmn = import 'common.libsonnet';
+local dsl = cmn.dsl;
+
+// DSL remapping for convenience
+local executors = dsl.executors;
+local jobs = dsl.jobs;
+local steps = dsl.steps;
+
+
 // Generate a deploy job for all environments
 local environments = ['staging', 'production'];
 
