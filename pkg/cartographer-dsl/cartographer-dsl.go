@@ -1,11 +1,10 @@
 package cartographerdsl
 
 import (
-	"fmt"
-
 	"github.com/google/go-jsonnet"
 	"github.com/kkyr/fig"
 	"github.com/sirupsen/logrus"
+	"sigs.k8s.io/yaml"
 )
 
 type Config struct {
@@ -34,6 +33,6 @@ func (cd *CartographerDSL) Parse(filename, input string) string {
 		logrus.Fatal(err)
 	}
 
-	fmt.Println(jsonStr)
-	return jsonStr
+	content, _ := yaml.JSONToYAML([]byte(jsonStr))
+	return string(content)
 }

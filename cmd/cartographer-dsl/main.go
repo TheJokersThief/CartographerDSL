@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	cartographerdsl "github.com/TheJokersThief/cartographer-dsl/pkg/cartographer-dsl"
@@ -18,5 +19,5 @@ func main() {
 	kong.Parse(&cli)
 
 	content, _ := ioutil.ReadFile(cli.File)
-	cdsl.Parse(cli.File, string(content))
+	fmt.Println(cdsl.Parse(cli.File, string(content)))
 }
