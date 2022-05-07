@@ -99,3 +99,7 @@ clean:
 container: build-linux
 	docker build -t ${DOCKER_REPO}:${COMMIT_SHA} -f Dockerfile .
 	docker tag ${DOCKER_REPO}:${COMMIT_SHA} ${DOCKER_REPO}:local
+
+.PHONY: run
+run:
+	go run cmd/cartographer-dsl/main.go --file examples/test.jsonnet
