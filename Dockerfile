@@ -1,13 +1,8 @@
-FROM debian:stable
-
-RUN apt-get update && apt-get -y --no-install-recommends install curl jq
-
-RUN adduser --disabled-password cartographer-dsl-user
+FROM cimg/base:2022.04-20.04
 
 ADD dist/bin/linux/amd64/cartographer-dsl /bin/cartographer-dsl
 ADD dsl /dsl
 
-USER cartographer-dsl-user
 WORKDIR /project
 ADD docker/config.yaml /etc/cartographer-dsl/config.yaml
 

@@ -5,7 +5,7 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
 {
     new(name, jobs)::
         local list_of_jobs = util.as_array(jobs);
-        { [name]: std.foldl(foldArrayOfObjects, list_of_jobs, {}) },
+        { [name]: { jobs: list_of_jobs } },
 
     job(
         name,
