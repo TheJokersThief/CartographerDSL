@@ -19,7 +19,7 @@ executor_constructors {
 
         {
             executors+: {
-                [name]: {
+                [name]+: {
                     [executor]: const.route_executor(executor_options),
                     resource_class: resource_class,
                     shell: shell,
