@@ -5,15 +5,13 @@ orbs:
 jobs:
   build-image:
     docker:
-      - image: thejokersthief/cartographer-dsl:latest
-        auth:
-          username: thejokersthief
-          password: $DOCKERHUB_PASSWORD
+      - image: cimg/go:1.17
     steps:
       - checkout
       - setup_remote_docker:
           version: "20.10.12"
           docker_layer_caching: true
+      - run: make build-linux
       - run: |
           TAG=$CIRCLE_SHA1
           docker build -t thejokersthief/cartographer-dsl:$TAG .
