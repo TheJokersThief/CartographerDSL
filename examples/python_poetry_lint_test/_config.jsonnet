@@ -1,4 +1,4 @@
-local full_dsl = import "_dsl.libsonnet";
+local full_dsl = import '_dsl.libsonnet';
 local dsl = full_dsl.circleci;
 
 
@@ -10,11 +10,11 @@ local orbs = dsl.orbs;
 
 
 pipeline.new(
-    orbs=orbs.new({'python': 'circleci/python@0.2.1'}),
+    orbs=orbs.new({ python: 'circleci/python@0.2.1' }),
     jobs=[
         jobs.new(
             'build-and-test',
-            executor_ref="python/default",
+            executor='python/default',
             steps=[
                 steps.checkout(),
                 'python/load-cache',
@@ -23,13 +23,14 @@ pipeline.new(
                 steps.run('poetry run flake8 --ignore F821,W504 src tests', name='Linting'),
                 steps.run('poetry run pytest tests --cov=src --strict tests', name='Tests'),
             ],
-        )
+        ),
     ],
     workflows=[
-        workflows.new('main',
+        workflows.new(
+            'main',
             jobs=[
-                workflows.job('build-and-test')
+                workflows.job('build-and-test'),
             ],
-        )
+        ),
     ],
 )

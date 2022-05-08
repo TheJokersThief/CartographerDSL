@@ -13,10 +13,7 @@ local environments = ['staging', 'production'];
 [
     jobs.new(
         'deploy-%s' % [environment],
-        executor_type='docker',
-        executor_options=[
-            executors.options.docker.new('ubuntu:14.04', auth=cmn.executor_auth),
-        ],
+        image='ubuntu:14.04',
         working_directory='/tmp/my-project',
         steps=[
             steps.run(

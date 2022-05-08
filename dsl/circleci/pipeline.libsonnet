@@ -8,6 +8,7 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         orbs={},
         jobs=[],
         workflows=[],
+        executors=[],
     )::
         version
         + orbs
@@ -16,5 +17,8 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
         }
         + {
             workflows: std.foldl(foldArrayOfObjects, workflows, {}),
+        }
+        + {
+            executors: std.foldl(foldArrayOfObjects, executors, {}),
         },
 }

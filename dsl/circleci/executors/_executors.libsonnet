@@ -1,6 +1,11 @@
 local const = import '../constants.libsonnet';
 
-{
+local executor_constructors = {
+    [exec_key]: const.executors[exec_key].new
+    for exec_key in std.objectFields(const.executors)
+};
+
+executor_constructors {
     new(
         name,
         executor_type,
@@ -23,6 +28,4 @@ local const = import '../constants.libsonnet';
                 },
             },
         },
-
-    options: const.executors,
 }

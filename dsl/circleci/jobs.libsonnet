@@ -5,9 +5,11 @@ local const = import 'constants.libsonnet';
     new(
         name,
         steps=[],
-        executor_type=null,
+
+        image=null,  // Helper to using just one docker image
+        executor='docker',
         executor_options={},
-        executor_ref=null,
+
         shell=null,
         parameters={},
         working_directory='~/project',
@@ -18,24 +20,26 @@ local const = import 'constants.libsonnet';
     )::
         assert !util.is_empty(steps) : 'job: Missing at least 1 step';
 
-        local executor =
-            if util.is_empty(executor_type)
+        local final_exec_options =
+            if util.is_empty(image)
             then
-                if util.is_empty(executor_ref)
-                then
-                    {}
-                else
-                    { executor: executor_ref }
+                executor_options
             else
-                // If executor isn't empty, we should verify it's one of the available options
-                assert std.member(const.executor_types, executor_type)
-                       : 'executors.new: executor_type must be one of ' + const.executor_types;
-                {
-                    [executor_type]: const.executors[executor_type].verify(executor_options),
-                };
+                { image: image } + executor_options;
+
+        local chosen_executor =
+            if util.is_empty(executor)
+            then
+                {}
+            else
+                if std.member(const.executor_types, executor)
+                then
+                    { [executor]: const.executors[executor].verify(final_exec_options) }
+                else
+                    { executor: executor };
 
         {
-            [name]: executor + {
+            [name]: chosen_executor {
                 steps: steps,
                 shell: shell,
                 parameters: parameters,

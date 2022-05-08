@@ -20,13 +20,15 @@ pipeline.new(
             environment={ TEST_REPORTS: '/tmp/test-reports' },
             working_directory='~/%s' % [cmn.project_name],
 
-            executor_type='docker',
             executor_options=[
-                executors.options.docker.new('ubuntu:14.04', auth=cmn.executor_auth),
-                executors.options.docker.new('mongo:2.6.8', auth=cmn.executor_auth, command=['mongod', '--smallfiles']),
-                executors.options.docker.new('postgres:14.2', auth=cmn.executor_auth, environment={ POSTGRES_USER: 'user' }),
-                executors.options.docker.new('redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673', auth=cmn.executor_auth),
-                executors.options.docker.new('rabbitmq:3.5.4', auth=cmn.executor_auth),
+                executors.docker('ubuntu:14.04', auth=cmn.executor_auth),
+                executors.docker('mongo:2.6.8', auth=cmn.executor_auth, command=['mongod', '--smallfiles']),
+                executors.docker('postgres:14.2', auth=cmn.executor_auth, environment={ POSTGRES_USER: 'user' }),
+                executors.docker(
+                    'redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673',
+                    auth=cmn.executor_auth
+                ),
+                executors.docker('rabbitmq:3.5.4', auth=cmn.executor_auth),
             ],
 
             steps=[

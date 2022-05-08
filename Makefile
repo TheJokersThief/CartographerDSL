@@ -13,10 +13,15 @@ BIN_PATH_DARWIN_AMD64:=dist/bin/darwin/amd64
 BIN_PATH_DARWIN_ARM64:=dist/bin/darwin/arm64
 BIN_PATH_DARWIN:=dist/bin/darwin/$(GOARCH)
 
+export MAGENTA ?= \033[1;31m
+export GREEN ?= \033[1;32m
+export WHITE ?= \033[1;37m
+export RESET ?= \033[m
+
 allPkgs = $(shell go list ./...)
 allSrcDirs = cmd pkg
+examples = examples/*
 
-# Go environment setup (See: https://wiki.squarespace.net/display/GO/Go+Envars)
 ifndef GOPATH
 export GOPATH=$(shell go env "GOPATH")
 endif
@@ -105,3 +110,13 @@ container: build-linux
 .PHONY: run
 run:
 	go run cmd/cartographer-dsl/main.go --file examples/test.jsonnet
+
+.PHONY: $(examples)
+$(examples):
+	@echo "Verifying $@"
+	@go run cmd/cartographer-dsl/main.go --file $@/_config.jsonnet > tmp_config.yaml
+	@circleci config validate tmp_config.yaml > /dev/null || (echo "\n${MAGENTA}$@ failed${RESET}\n" && exit 1)
+	@echo "${GREEN}Verifying $@ succeeded${RESET}\n"
+
+.PHONY: verify-examples
+verify-examples: $(examples)

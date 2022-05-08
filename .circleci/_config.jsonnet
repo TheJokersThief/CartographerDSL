@@ -1,4 +1,4 @@
-local full_dsl = import "_dsl.libsonnet";
+local full_dsl = import '_dsl.libsonnet';
 local dsl = full_dsl.circleci;
 
 
@@ -14,19 +14,20 @@ pipeline.new(
     jobs=[
         jobs.new(
             'build-and-test',
-            executor_type="docker",
-            executor_options=[executors.options.docker.new('ubuntu:20.04')],
+            executor_type='docker',
+            executor_options=[executors.docker.new('ubuntu:20.04')],
             steps=[
                 steps.checkout(),
                 steps.run('echo "Hello World"', name='Install dependencies'),
             ],
-        )
+        ),
     ],
     workflows=[
-        workflows.new('main',
+        workflows.new(
+            'main',
             jobs=[
-                workflows.job('build-and-test')
+                workflows.job('build-and-test'),
             ],
-        )
+        ),
     ],
 )
