@@ -1,10 +1,22 @@
 # Cartographer DSL
 
+[![CircleCI](https://circleci.com/gh/TheJokersThief/CartographerDSL/tree/main.svg?style=svg&circle-token=edd9f7a179ba0e5a17b27ddbb620ca9096adec76)](https://circleci.com/gh/TheJokersThief/CartographerDSL/tree/main)
+
+
 A domain specific language for defining CircleCI pipelines.
 
+- [Cartographer DSL](#cartographer-dsl)
+    - [Local Usage](#local-usage)
+    - [Running on CircleCI](#running-on-circleci)
+- [Examples](#examples)
+- [Docs: CircleCI](#docs-circleci)
+
+
+<details><summary>Expand For Full Table Of Contents</summary>
 <!-- TOC -->
 
 - [Cartographer DSL](#cartographer-dsl)
+    - [Why??](#why)
     - [Local Usage](#local-usage)
         - [Docker Image](#docker-image)
     - [Running on CircleCI](#running-on-circleci)
@@ -42,6 +54,24 @@ A domain specific language for defining CircleCI pipelines.
     - [Orbs](#orbs)
 
 <!-- /TOC -->
+</details>
+
+---
+
+## Why??
+
+YAML is _fine_ at 100 lines, less so at 1,000 lines and almost impossible to maintain at 10,000 lines. Anchors provide some capacity to keep things DRY but they're clunky and don't do enough really.
+
+Enter Cartographer DSL, a domain-specific language based on Jsonnet that gives you the power of a complete programming language.
+
+Some of the benefits:
+
+- Config can be more condensed when appropriate (easier to view lots of config all at once)
+- Loops and variables make it easier to repeat and template steps
+
+I'm also hoping to take some common patterns and turn them into templates/functions/reusable chunks.
+
+I built this because I noticed CircleCI supported dynamic config generation, and I wanted more options than YAML to write my config.
 
 ## Local Usage
 
@@ -88,6 +118,8 @@ workflows:
 ```
 
 # Examples
+
+If you're looking to learn more about writing Jsonnet, [there's a very nice tutorial on the official website.](https://jsonnet.org/learning/tutorial.html)
 
 ## Minimal
 
