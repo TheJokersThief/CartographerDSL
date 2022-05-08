@@ -11,21 +11,33 @@ A domain specific language for defining CircleCI pipelines.
 - [Examples](#examples)
     - [Minimal](#minimal)
 - [Docs: CircleCI](#docs-circleci)
-    - [Pipeline dsl.circleci.pipeline.new](#pipeline-dslcirclecipipelinenew)
-    - [Workflows dsl.circleci.workflows.new](#workflows-dslcircleciworkflowsnew)
-        - [Job dsl.circleci.workflows.job](#job-dslcircleciworkflowsjob)
-        - [Filter: Branches dsl.circleci.workflows.filter_branches](#filter-branches-dslcircleciworkflowsfilter_branches)
-        - [Filter: Branches dsl.circleci.workflows.filter_tags](#filter-branches-dslcircleciworkflowsfilter_tags)
-            - [Multiple Filters](#multiple-filters)
-        - [Matrix dsl.circleci.workflows.matrix](#matrix-dslcircleciworkflowsmatrix)
+    - [Pipeline](#pipeline)
+    - [Workflows](#workflows)
+        - [Job](#job)
+        - [Filter: Branches](#filter-branches)
+        - [Filter: Branches](#filter-branches)
+        - [Multiple Filters](#multiple-filters)
+        - [Matrix](#matrix)
     - [Jobs](#jobs)
-            - [Job Executor Options dsl.circleci.executors.[docker, machine, macos, windows]](#job-executor-options-dslcircleciexecutorsdocker-machine-macos-windows)
-                - [Docker dsl.circleci.executors.docker](#docker-dslcircleciexecutorsdocker)
-                - [Machine dsl.circleci.executors.machine](#machine-dslcircleciexecutorsmachine)
-                - [MacOS dsl.circleci.executors.macos](#macos-dslcircleciexecutorsmacos)
-                - [Windows dsl.circleci.executors.windows](#windows-dslcircleciexecutorswindows)
-                - [Custom Executor e.g. from an orb](#custom-executor-eg-from-an-orb)
+        - [Job Executor Options](#job-executor-options)
+            - [Docker](#docker)
+            - [Machine](#machine)
+            - [MacOS](#macos)
+            - [Windows](#windows)
+            - [Custom Executor e.g. from an orb](#custom-executor-eg-from-an-orb)
         - [Steps](#steps)
+            - [run](#run)
+            - [when](#when)
+            - [unless](#unless)
+            - [checkout](#checkout)
+            - [setup_remote_docker](#setup_remote_docker)
+            - [save_cache](#save_cache)
+            - [restore_cache](#restore_cache)
+            - [store_artifacts](#store_artifacts)
+            - [store_test_results](#store_test_results)
+            - [persist_to_workspace](#persist_to_workspace)
+            - [attach_workspace](#attach_workspace)
+            - [add_ssh_keys](#add_ssh_keys)
     - [Executors](#executors)
     - [Orbs](#orbs)
 
@@ -109,7 +121,9 @@ pipeline.new(
 
 # Docs: CircleCI
 
-## Pipeline `dsl.circleci.pipeline.new`
+## Pipeline
+
+`dsl.circleci.pipeline.new`
 
 
 |Name       |  Type            |   Default   |
@@ -147,7 +161,9 @@ pipeline.new(
 )
 ```
 
-## Workflows `dsl.circleci.workflows.new`
+## Workflows
+
+`dsl.circleci.workflows.new`
 
 |Name    |    Type       |     Default   |
 |--------|---------------|---------------|
@@ -164,7 +180,9 @@ workflows.new(
 )
 ```
 
-### Job `dsl.circleci.workflows.job`
+### Job
+
+`dsl.circleci.workflows.job`
 
 |Name      |    Type            |  Default |
 |----------|--------------------|----------|
@@ -175,7 +193,9 @@ workflows.new(
 |matrix    |    Matrix          |  {}      |
 |when      |    string          |  `null`  |
 
-### Filter: Branches `dsl.circleci.workflows.filter_branches`
+### Filter: Branches
+
+`dsl.circleci.workflows.filter_branches`
 
 |Name      |    Type            |  Default |
 |----------|--------------------|----------|
@@ -200,7 +220,9 @@ workflows.new(
 )
 ```
 
-### Filter: Branches `dsl.circleci.workflows.filter_tags`
+### Filter: Branches
+
+`dsl.circleci.workflows.filter_tags`
 
 |Name      |    Type            |  Default |
 |----------|--------------------|----------|
@@ -226,7 +248,7 @@ workflows.new(
 )
 ```
 
-#### Multiple Filters
+### Multiple Filters
 
 ```jsonnet
 local full_dsl = import '_dsl.libsonnet';
@@ -252,7 +274,9 @@ workflows.new(
 )
 ```
 
-### Matrix `dsl.circleci.workflows.matrix`
+### Matrix
+
+`dsl.circleci.workflows.matrix`
 
 |Name        |    Type                 |   Default  |
 |------------|-------------------------|------------|
@@ -316,9 +340,13 @@ jobs.new(
 ),
 ```
 
-#### Job Executor Options `dsl.circleci.executors.[docker, machine, macos, windows]`
+### Job Executor Options
 
-##### Docker `dsl.circleci.executors.docker`
+`dsl.circleci.executors.[docker, machine, macos, windows]`
+
+#### Docker
+
+`dsl.circleci.executors.docker`
 
 
 |Name        |   Type                 |    Default     |
@@ -351,7 +379,9 @@ jobs.new(
 ),
 ```
 
-##### Machine `dsl.circleci.executors.machine`
+#### Machine
+
+`dsl.circleci.executors.machine`
 
 |Name                  |   Type     |    Default   |
 |----------------------|------------|--------------|
@@ -374,7 +404,9 @@ jobs.new(
 ),
 ```
 
-##### MacOS `dsl.circleci.executors.macos`
+#### MacOS
+
+`dsl.circleci.executors.macos`
 
 |Name                  |   Type     |    Default   |
 |----------------------|------------|--------------|
@@ -395,11 +427,13 @@ jobs.new(
 ),
 ```
 
-##### Windows `dsl.circleci.executors.windows`
+#### Windows
+
+`dsl.circleci.executors.windows`
 
 The windows executor has no options.
 
-##### Custom Executor (e.g. from an orb)
+#### Custom Executor (e.g. from an orb)
 
 ```jsonnet
 local full_dsl = import '_dsl.libsonnet';
@@ -428,6 +462,214 @@ local jobs = dsl.jobs;
 local pipeline = dsl.pipeline;
 local steps = dsl.steps;
 local workflows = dsl.workflows;
+```
+
+
+#### run
+
+`dsl.circleci.steps.run`
+
+|Name               |    Type                 |    Default  |
+|-------------------|-------------------------|-------------|
+|command            |    string               |    -        |
+|name               |    string               |    `null`   |
+|shell              |    string               |    `null`   |
+|environment        |    dict[string]string   |    {}       |
+|background         |    bool                 |    false    |
+|working_directory  |    string               |    "."      |
+|no_output_timeout  |    string               |    "10m"    |
+|when               |    string|dict          |    `null`   |
+
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.run('echo "Hello, World!", no_output_timeout="30m)
+```
+
+#### when
+
+|Name               |    Type                 |    Default  |
+|-------------------|-------------------------|-------------|
+|steps              |    list[Step]           |    -        |
+|when               |    string|dict          |    -        |
+
+`dsl.circleci.steps.when`
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+local const = full_steps.circleci.constants;
+
+steps.when(
+    condition={
+        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]},
+    steps=[steps.run('echo "This is my favourite schedule!"')]
+)
+```
+
+#### unless
+
+`dsl.circleci.steps.unless`
+
+|Name               |    Type                 |    Default  |
+|-------------------|-------------------------|-------------|
+|steps              |    list[Step]           |    -        |
+|when               |    string|dict          |    -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.unless(
+    condition={
+        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]},
+    steps=[steps.run('echo "This is my favourite schedule!"')]
+)
+```
+
+#### checkout
+
+`dsl.circleci.steps.checkout`
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.checkout()
+```
+
+#### setup_remote_docker
+
+`dsl.circleci.steps.setup_remote_docker`
+
+|Name                    | Type      |  Default         |
+|------------------------|-----------|------------------|
+|version                 | string    |  '17.09.0-ce'    |
+|docker_layer_caching    | bool      |  false           |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.setup_remote_docker()
+```
+
+#### save_cache
+
+`dsl.circleci.steps.save_cache`
+
+|Name   |   Type          |  Default  |
+|-------|-----------------|-----------|
+|key    |   string        |  -        |
+|paths  |   list[string]  |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+local const = full_steps.circleci.constants;
+
+steps.save_cache(
+    key='v1' + const.cache_vars.checksum('testfile.txt'),
+    paths=['/cached/path']
+)
+```
+
+#### restore_cache
+
+`dsl.circleci.steps.restore_cache`
+
+|Name   |   Type          |  Default  |
+|-------|-----------------|-----------|
+|key    |   string        |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+local const = full_steps.circleci.constants;
+
+steps.restore_cache('v1' + const.cache_vars.checksum('testfile.txt'))
+```
+
+#### store_artifacts
+
+`dsl.circleci.steps.store_artifacts`
+
+|Name          |   Type          |  Default  |
+|--------------|-----------------|-----------|
+|path          |   string        |  -        |
+|destination   |   string        |  `null`   |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.store_artifacts('/my-artifacts-folders/')
+```
+
+#### store_test_results
+
+`dsl.circleci.steps.store_test_results`
+
+|Name   |   Type          |  Default  |
+|-------|-----------------|-----------|
+|path   |   string        |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.store_test_results('/my-artifacts-folders/')
+```
+
+#### persist_to_workspace
+
+`dsl.circleci.steps.persist_to_workspace`
+
+|Name    |   Type          |  Default  |
+|--------|-----------------|-----------|
+|root    |   string        |  -        |
+|paths   |   list[string]  |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.persist_to_workspace(
+    root='/my-project',
+    paths=['important-folder']
+)
+```
+
+#### attach_workspace
+
+`dsl.circleci.steps.attach_workspace`
+
+|Name    |   Type          |  Default  |
+|--------|-----------------|-----------|
+|at      |   string        |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.attach_workspace('/my-project/important-folder')
+```
+
+#### add_ssh_keys
+
+`dsl.circleci.steps.add_ssh_keys`
+
+|Name              |   Type          |  Default  |
+|------------------|-----------------|-----------|
+|fingerprints      |   list[string]  |  -        |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local steps = full_steps.circleci.steps;
+
+steps.add_ssh_keys()
 ```
 
 ## Executors

@@ -51,7 +51,7 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
         version='17.09.0-ce',
     )::
         {
-            docker_layer_caching: {
+            setup_remote_docker: {
                 docker_layer_caching: docker_layer_caching,
                 version: version,
             },
@@ -89,12 +89,13 @@ local valid_when_enum = ['always', 'on_success', 'on_fail'];
         destination=null,
     )::
         {
-            store_artifacts: {
-                                 path: path,
-                             }
-                             + if !util.is_empty(destination)
-                             then { destination: destination }
-                             else {},
+            store_artifacts:
+            {
+                path: path,
+            }
+            + if !util.is_empty(destination)
+            then { destination: destination }
+            else {},
         },
 
     store_test_results(path)::
