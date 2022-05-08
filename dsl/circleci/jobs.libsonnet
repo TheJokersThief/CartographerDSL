@@ -7,6 +7,7 @@ local const = import 'constants.libsonnet';
         steps=[],
         executor_type=null,
         executor_options={},
+        executor_ref=null,
         shell=null,
         parameters={},
         working_directory='~/project',
@@ -20,7 +21,11 @@ local const = import 'constants.libsonnet';
         local executor =
             if util.is_empty(executor_type)
             then
-                {}
+                if util.is_empty(executor_ref)
+                then
+                    {}
+                else
+                    { executor: executor_ref }
             else
                 // If executor isn't empty, we should verify it's one of the available options
                 assert std.member(const.executor_types, executor_type)
@@ -30,7 +35,7 @@ local const = import 'constants.libsonnet';
                 };
 
         {
-            [name]: executor {
+            [name]: executor + {
                 steps: steps,
                 shell: shell,
                 parameters: parameters,

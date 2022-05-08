@@ -3,7 +3,7 @@
 // Local file imports
 local cmn = import 'common.libsonnet';
 local dsl = cmn.dsl;
-local environment_jobs = import 'test.libsonnet';
+local environment_jobs = import 'environment.libsonnet';
 
 // DSL remapping for convenience
 local const = dsl.constants;
