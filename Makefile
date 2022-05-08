@@ -58,22 +58,22 @@ build: build-linux build-darwin
 
 .PHONY: build-linux
 build-linux:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=${CGO_ENABLED} go build -mod=vendor --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_LINUX}/${BIN_NAME} ./cmd/${BIN_NAME}
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=${CGO_ENABLED} go build --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_LINUX}/${BIN_NAME} ./cmd/${BIN_NAME}
 
 .PHONY: build-darwin
 build-darwin: build-darwin-amd64 build-darwin-arm64
 
 .PHONY: build-darwin-amd64
 build-darwin-amd64:
-	GOOS=darwin GOARCH=amd64 CGO_ENABLED=${CGO_ENABLED} go build -mod=vendor --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_DARWIN_AMD64}/${BIN_NAME} ./cmd/${BIN_NAME}
+	GOOS=darwin GOARCH=amd64 CGO_ENABLED=${CGO_ENABLED} go build --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_DARWIN_AMD64}/${BIN_NAME} ./cmd/${BIN_NAME}
 
 .PHONY: build-darwin-arm64
 build-darwin-arm64:
-	GOOS=darwin GOARCH=arm64 CGO_ENABLED=${CGO_ENABLED} go build -mod=vendor --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_DARWIN_ARM64}/${BIN_NAME} ./cmd/${BIN_NAME}
+	GOOS=darwin GOARCH=arm64 CGO_ENABLED=${CGO_ENABLED} go build --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' -o ${BIN_PATH_DARWIN_ARM64}/${BIN_NAME} ./cmd/${BIN_NAME}
 
 .PHONY: install
 install:
-	GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=${CGO_ENABLED} go install -mod=vendor --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' ./cmd/${BIN_NAME}
+	GOOS=$(GOOS) GOARCH=$(GOARCH) CGO_ENABLED=${CGO_ENABLED} go install --ldflags '-X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.VersionName=${VERSION} -X ${PRJ_SRC_PATH}/cmd/${BIN_NAME}/main.GitCommitSHA=${COMMIT_SHA}' ./cmd/${BIN_NAME}
 
 .PHONY: archive
 archive: build
@@ -84,7 +84,7 @@ archive: build
 
 .PHONY: test
 test:
-	go test -cover -mod=vendor ./...
+	go test -cover ./...
 
 .PHONY: coverage
 coverage:
