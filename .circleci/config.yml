@@ -3,9 +3,25 @@ setup: true
 orbs:
   continuation: circleci/continuation@0.1.0
 jobs:
-  generate-config:
+  build-image:
     docker:
       - image: thejokersthief/cartographer-dsl:latest
+        auth:
+          username: thejokersthief
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: "20.10.12"
+          docker_layer_caching: true
+      - run: |
+          TAG=$CIRCLE_SHA1
+          docker build -t thejokersthief/cartographer-dsl:$TAG .
+          echo $DOCKERHUB_PASSWORD | docker login -u thejokersthief --password-stdin
+          docker push thejokersthief/cartographer-dsl:$TAG
+  generate-config:
+    docker:
+      - image: thejokersthief/cartographer-dsl:$CIRCLE_SHA1
         auth:
           username: thejokersthief
           password: $DOCKERHUB_PASSWORD
@@ -20,4 +36,6 @@ jobs:
 workflows:
   setup-workflow:
     jobs:
-      - generate-config
+      - build-image
+      - generate-config:
+          requires: ['build-image']
