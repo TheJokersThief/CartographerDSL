@@ -10,18 +10,13 @@ local orbs = dsl.orbs;
 
 
 pipeline.new(
-    orbs=orbs.new({'python': 'circleci/python@0.2.1'}),
     jobs=[
         jobs.new(
             'build-and-test',
             executor_ref="python/default",
             steps=[
                 steps.checkout(),
-                'python/load-cache',
-                steps.run('poetry install', name='Install dependencies'),
-                'python/save-cache',
-                steps.run('poetry run flake8 --ignore F821,W504 src tests', name='Linting'),
-                steps.run('poetry run pytest tests --cov=src --strict tests', name='Tests'),
+                steps.run('echo "Hello World"', name='Install dependencies'),
             ],
         )
     ],

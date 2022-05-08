@@ -4,12 +4,16 @@ orbs:
   continuation: circleci/continuation@0.1.0
 jobs:
   generate-config:
-    executor: continuation/default
+    docker:
+      - image: thejokersthief/cartographer-dsl:latest
+        auth:
+          username: thejokersthief
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
           name: Generate Pipeline generated_config.yml file
-          command: cartographerdsl --file .circleci/_config.jsonnet > generated_config.yml
+          command: cartographer-dsl --file .circleci/_config.jsonnet > generated_config.yml
       - continuation/continue:
           parameters: '{}'
           configuration_path: generated_config.yml
