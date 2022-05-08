@@ -1,7 +1,8 @@
-# Cartographer DSL
-
 [![CircleCI](https://circleci.com/gh/TheJokersThief/CartographerDSL/tree/main.svg?style=svg&circle-token=edd9f7a179ba0e5a17b27ddbb620ca9096adec76)](https://circleci.com/gh/TheJokersThief/CartographerDSL/tree/main)
 
+# Cartographer DSL
+
+![](cartographer-campervan.png)
 
 A domain specific language for defining CircleCI pipelines.
 
