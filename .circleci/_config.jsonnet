@@ -14,8 +14,7 @@ pipeline.new(
     jobs=[
         jobs.new(
             'build-and-test',
-            executor_type='docker',
-            executor_options=[executors.docker.new('ubuntu:20.04')],
+            image="ubuntu:20.04",
             steps=[
                 steps.checkout(),
                 steps.run('echo "Hello World"', name='Install dependencies'),
