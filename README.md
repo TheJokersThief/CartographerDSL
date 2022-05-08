@@ -73,9 +73,6 @@ jobs:
   generate-config:
     docker:
       - image: thejokersthief/cartographer-dsl:latest
-        auth:
-          username: thejokersthief
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
