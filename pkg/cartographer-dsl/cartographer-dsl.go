@@ -19,7 +19,7 @@ type CartographerDSL struct {
 
 func NewCartographerDSL(filename string) *CartographerDSL {
 	var cfg Config
-	err := fig.Load(&cfg, fig.Dirs(userHomeDir(), userConfDir(), "/etc/cartographer-dsl", "."))
+	err := fig.Load(&cfg, fig.Dirs(userHomeDir(), userConfDir(), "/etc/cartographer-dsl", ".", "../.."))
 	if err != nil {
 		logrus.Fatal(err)
 	}
