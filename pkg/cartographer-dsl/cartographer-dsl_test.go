@@ -18,21 +18,18 @@ local workflows = dsl.workflows;
 
 
 pipeline.new(
-    jobs=[
-        jobs.new(
-            'build-and-test',
-            image="ubuntu:20.04",
-            steps=[
-                steps.checkout(),
-                steps.run('echo "Hello World"', name='Install dependencies'),
-            ],
-        ),
-    ],
     workflows=[
         workflows.new(
             'main',
             jobs=[
-                workflows.job('build-and-test'),
+                workflows.job(
+					'build-and-test',
+					image="ubuntu:20.04",
+					steps=[
+						steps.checkout(),
+						steps.run('echo "Hello World"', name='Install dependencies'),
+					],
+				),
             ],
         ),
     ],
@@ -40,7 +37,7 @@ pipeline.new(
 
 const resultYAML = `executors: {}
 jobs:
-  build-and-test:
+  main_build-and-test:
     docker:
     - image: ubuntu:20.04
     parallelism: 1
@@ -58,8 +55,8 @@ version: 2.1
 workflows:
   main:
     jobs:
-    - build-and-test:
-        name: build-and-test
+    - main_build-and-test:
+        name: main_build-and-test
 `
 
 func TestParse(t *testing.T) {

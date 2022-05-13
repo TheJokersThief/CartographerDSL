@@ -17,4 +17,11 @@
 
     default(value, fallback)::
         if util.is_empty(value) then fallback else value,
+
+    // Fold two objects together
+    foldTwoObjects(last, current)::
+        last + std.prune(current),
+
+    foldArrayOfObjects(array)::
+        std.foldl(self.foldTwoObjects, array, {}),
 }

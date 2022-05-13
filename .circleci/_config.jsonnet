@@ -10,22 +10,23 @@ local orbs = dsl.orbs;
 local executors = dsl.executors;
 
 
+local docker_image = 'thejokersthief/cartographer-dsl';
+
+
 pipeline.new(
-    jobs=[
-        jobs.new(
-            'build-and-test',
-            image="ubuntu:20.04",
-            steps=[
-                steps.checkout(),
-                steps.run('echo "Hello World"', name='Install dependencies'),
-            ],
-        ),
-    ],
+    orbs=(
+        orbs.circleci.go.include()
+        + orbs.circleci.docker.include()
+    ),
     workflows=[
-        workflows.new(
-            'main',
+        workflows.new('main',
             jobs=[
-                workflows.job('build-and-test'),
+                orbs.circleci.go.jobs.run_tests('build-and-test'),
+                orbs.circleci.docker.jobs.publish(
+                    image=docker_image,
+                    tag='$CIRCLE_SHA1,$CIRCLE_BRANCH,latest',
+                    requires=['build-and-test']
+                )
             ],
         ),
     ],

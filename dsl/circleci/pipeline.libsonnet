@@ -1,4 +1,5 @@
 local dslVersion = import 'version.libsonnet';
+local util = import '../util.libsonnet';
 
 local foldArrayOfObjects(last, current) = last + std.prune(current);
 
@@ -6,19 +7,14 @@ local foldArrayOfObjects(last, current) = last + std.prune(current);
     new(
         version=dslVersion.new(),
         orbs={},
-        jobs=[],
+        // jobs=[],
         workflows=[],
         executors=[],
     )::
         version
         + orbs
+        + util.foldArrayOfObjects(workflows)
         + {
-            jobs: std.foldl(foldArrayOfObjects, jobs, {}),
-        }
-        + {
-            workflows: std.foldl(foldArrayOfObjects, workflows, {}),
-        }
-        + {
-            executors: std.foldl(foldArrayOfObjects, executors, {}),
+            executors: util.foldArrayOfObjects(executors),
         },
 }
