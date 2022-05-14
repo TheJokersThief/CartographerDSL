@@ -18,7 +18,7 @@ local workflows = import '../../workflows.libsonnet';
         matrix=matrix,
         when=when,
 
-        executor='go/default:' + go_version,
+        executor={ name: 'go/default', tag: go_version},
 
         steps = [
             go_steps.load_cache(),
