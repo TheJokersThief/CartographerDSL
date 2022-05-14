@@ -40,7 +40,7 @@ pipeline.new(
                     docker_password='DOCKERHUB_PASSWORD',
                     before_build=[
                         steps.attach_workspace('/tmp/dist'),
-                        steps.run('mv -r /tmp/dist ./dist')
+                        steps.run('mv /tmp/dist ./dist')
                     ],
                 )
             ],
