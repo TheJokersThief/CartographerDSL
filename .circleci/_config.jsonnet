@@ -26,7 +26,9 @@ pipeline.new(
                     tag='$CIRCLE_SHA1,$CIRCLE_BRANCH',
                     requires=['build-and-test'],
                     docker_password='DOCKERHUB_PASSWORD',
-                    before_build=['make build-linux'],
+                    before_build=[
+                        steps.run('make build-linux')
+                    ],
                 )
             ],
         ),
