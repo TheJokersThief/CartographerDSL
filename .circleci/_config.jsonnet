@@ -24,7 +24,8 @@ pipeline.new(
                 orbs.circleci.docker.jobs.publish(
                     image=docker_image,
                     tag='$CIRCLE_SHA1,$CIRCLE_BRANCH',
-                    requires=['build-and-test']
+                    requires=['build-and-test'],
+                    docker_password='DOCKERHUB_PASSWORD'
                 )
             ],
         ),
