@@ -11,13 +11,13 @@ local const = import '../../constants.libsonnet';
 
     // Documentation: https://circleci.com/developer/orbs/orb/circleci/go#commands-test
     test(
-        count = 1,
+        count = "1",
         covermode = 'set',
         coverpkg = './...',
         coverprofile = 'cover-source.out',
         failfast = false,
         packages = './...',
-        parallel = 1,
+        parallel = "1",
         race = false,
         short = false,
         verbose = false,
