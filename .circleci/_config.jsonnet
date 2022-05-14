@@ -29,7 +29,7 @@ pipeline.new(
                         orbs.circleci.go.mod_download_cached(),
                         steps.run('make build-linux'),
                         orbs.circleci.go.save_cache(),
-                        steps.persist_to_workspace('dist', 'linux')
+                        steps.persist_to_workspace('dist', 'bin')
                     ],
                 ),
 
