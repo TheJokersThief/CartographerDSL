@@ -5,7 +5,7 @@ local executor_constructors = {
     for exec_key in std.objectFields(const.executors)
 };
 
-executor_constructors {
+executor_constructors + {
     new(
         name,
         executor,
