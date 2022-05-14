@@ -7,7 +7,6 @@ local pipeline = dsl.pipeline;
 local steps = dsl.steps;
 local workflows = dsl.workflows;
 local orbs = dsl.orbs;
-local executors = dsl.executors;
 
 
 local docker_image = 'thejokersthief/cartographer-dsl';
@@ -24,7 +23,7 @@ pipeline.new(
                 orbs.circleci.go.jobs.run_tests('build-and-test'),
                 orbs.circleci.docker.jobs.publish(
                     image=docker_image,
-                    tag='$CIRCLE_SHA1,$CIRCLE_BRANCH,latest',
+                    tag='$CIRCLE_SHA1,$CIRCLE_BRANCH',
                     requires=['build-and-test']
                 )
             ],
