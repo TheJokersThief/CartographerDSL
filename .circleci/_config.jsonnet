@@ -20,12 +20,13 @@ pipeline.new(
     workflows=[
         workflows.new('main',
             jobs=[
-                orbs.circleci.go.jobs.run_tests('build-and-test'),
+                orbs.circleci.go.jobs.run_tests('build-and-test', go_version='1.17'),
                 orbs.circleci.docker.jobs.publish(
                     image=docker_image,
                     tag='$CIRCLE_SHA1,$CIRCLE_BRANCH',
                     requires=['build-and-test'],
-                    docker_password='DOCKERHUB_PASSWORD'
+                    docker_password='DOCKERHUB_PASSWORD',
+                    before_build=['make build-linux'],
                 )
             ],
         ),
