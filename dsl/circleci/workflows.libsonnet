@@ -10,14 +10,22 @@ local extractJobs(array, key) = std.map(
     , array
 );
 
+local prefixNonOrbs(string, prefix) =
+    local constainsSlash = std.length(std.findSubstr('/', string)) > 0;
+
+    if constainsSlash
+    then string
+    else prefix + string
+;
+
 local prefixFieldValues(object, field, prefix) =
     if std.objectHas(object, field)
     then
         if std.type(object[field]) == 'array'
         then
-            {[field]: std.map(function(item) prefix + item, object[field])}
+            {[field]: std.map(function(item) prefixNonOrbs(item, prefix), object[field])}
         else
-            {[field]: prefix + object[field]}
+            {[field]: prefixNonOrbs(object[field], prefix)}
     else
         {}
 ;
@@ -30,7 +38,7 @@ local prefixAllJobs(array, prefix) = std.map(
         then
             local jobName = jobFields[0];
             {
-                [prefix + jobName]: job[jobName]
+                [prefixNonOrbs(jobName, prefix)]: job[jobName]
                     + prefixFieldValues(job[jobName], 'requires', prefix)
                     + prefixFieldValues(job[jobName], 'name', prefix)
             }
