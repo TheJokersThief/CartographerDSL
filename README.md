@@ -177,15 +177,6 @@ local steps = dsl.steps;
 local workflows = dsl.workflows;
 
 pipeline.new(
-    jobs=[
-        jobs.new('build',
-            image="ubuntu:20.04",
-            steps=[
-                steps.checkout(),
-                steps.run('echo "Hello World!"', name='Hello, World'),
-            ]
-        ),
-    ],
     workflows=[
         workflows.new(
             'main', jobs=[
@@ -194,6 +185,7 @@ pipeline.new(
                     image="ubuntu:20.04",
                     steps=[
                         steps.checkout(),
+                        steps.run('echo "Hello World!"', name='Hello, World'),
                     ]
                 )
             ]
