@@ -3,7 +3,7 @@ local dsl = cmn.dsl;
 
 // DSL remapping for convenience
 local executors = dsl.executors;
-local jobs = dsl.jobs;
+local workflows = dsl.workflows;
 local steps = dsl.steps;
 
 
@@ -11,8 +11,9 @@ local steps = dsl.steps;
 local environments = ['staging', 'production'];
 
 [
-    jobs.new(
+    workflows.job(
         'deploy-%s' % [environment],
+        requires=['build'], filters=workflows.filter_branches(only=[environment]),
         image='ubuntu:14.04',
         working_directory='/tmp/my-project',
         steps=[
