@@ -119,6 +119,9 @@ workflows:
 
 # Examples
 
+- [Full example from the CircleCI Docs](examples/circleci_docs_example/_config.jsonnet)
+- [Python poetry lint & test](examples/python_poetry_lint_test/_config.jsonnet)
+
 If you're looking to learn more about writing Jsonnet, [there's a very nice tutorial on the official website.](https://jsonnet.org/learning/tutorial.html)
 
 ## Minimal
