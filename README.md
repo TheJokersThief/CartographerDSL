@@ -27,12 +27,11 @@ A domain specific language for defining CircleCI pipelines.
     - [Pipeline](#pipeline)
     - [Workflows](#workflows)
         - [Job](#job)
+        - [Job Executor Options](#job-executor-options)
         - [Filter: Branches](#filter-branches)
         - [Filter: Branches](#filter-branches)
         - [Multiple Filters](#multiple-filters)
         - [Matrix](#matrix)
-    - [Jobs](#jobs)
-        - [Job Executor Options](#job-executor-options)
             - [Docker](#docker)
             - [Machine](#machine)
             - [MacOS](#macos)
@@ -134,17 +133,19 @@ local steps = dsl.steps;
 local workflows = dsl.workflows;
 
 pipeline.new(
-    jobs=[
-        jobs.new('build',
-            image="ubuntu:20.04",
-            steps=[
-                steps.checkout(),
-                steps.run('echo "Hello World!"', name='Hello, World'),
+    workflows=[
+        workflows.new(
+            'main', jobs=[
+                workflows.job(
+                    'build',
+                    image="ubuntu:20.04",
+                    steps=[
+                        steps.checkout(),
+                        steps.run('echo "Hello World!"', name='Hello, World'),
+                    ]
+                )
             ]
         ),
-    ],
-    workflows=[
-        workflows.new('main', jobs=[workflows.job('build')]),
     ],
 )
 ```
@@ -160,7 +161,6 @@ pipeline.new(
 |-----------|------------------|-------------|
 |version    |  string          |   "2.1",    |
 |orbs       |  Orb             |   {}        |
-|jobs       |  list[Jobs]      |   []        |
 |workflows  |  list[Workflows] |   []        |
 |executors  |  list[Executors] |   []        |
 
@@ -186,7 +186,17 @@ pipeline.new(
         ),
     ],
     workflows=[
-        workflows.new('main', jobs=[workflows.job('build')]),
+        workflows.new(
+            'main', jobs=[
+                workflows.job(
+                    'build',
+                    image="ubuntu:20.04",
+                    steps=[
+                        steps.checkout(),
+                    ]
+                )
+            ]
+        ),
     ],
 )
 ```
@@ -214,14 +224,45 @@ workflows.new(
 
 `dsl.circleci.workflows.job`
 
-|Name      |    Type            |  Default |
-|----------|--------------------|----------|
-|name      |    string          |  -       |
-|requires  |    list[string]    |  []      |
-|context   |    list[string]    |  []      |
-|filters   |    Filter          |  {}      |
-|matrix    |    Matrix          |  {}      |
-|when      |    string          |  `null`  |
+|Name               |    Type                 |  Default    |
+|-------------------|-------------------------|-------------|
+|name               |    string               |  -          |
+|requires           |    list[string]         |  []         |
+|context            |    list[string]         |  []         |
+|filters            |    Filter               |  {}         |
+|matrix             |    Matrix               |  {}         |
+|when               |    string               |  `null`     |
+|steps              |     list[Step]          |    []       |
+|image              |     string              |    `null`   |
+|executor           |     string              |    docker   |
+|executor_options   |     Executor            |    {}       |
+|shell              |     string              |    `null`   |
+|parameters         |     dict[string]string  |    {}       |
+|working_directory  |     string              |    `null`   |
+|parallelism        |     integer             |    1        |
+|environment        |     dict[string]string  |    {}       |
+|resource_class     |     string              |    `null`   |
+|circleci_ip_ranges |     bool                |    false    |
+
+```jsonnet
+local full_dsl = import '_dsl.libsonnet';
+local dsl = full_dsl.circleci;
+
+local steps = dsl.steps;
+local workflows = dsl.workflows;
+
+workflows.job(
+    'build',
+    image="ubuntu:20.04",
+    steps=[
+        steps.checkout(),
+    ]
+)
+```
+
+### Job Executor Options
+
+`dsl.circleci.executors.[docker, machine, macos, windows]`
 
 ### Filter: Branches
 
@@ -334,45 +375,6 @@ workflows.new(
     ]
 )
 ```
-
-## Jobs
-
-`image` is a convenience argument, for setting the executor to `"docker"` and specifying an image.
-
-`executor` should be one of `docker`, `machine`, `macos` or `windows`.
-
-|Name               |     Type                |    Default  |
-|-------------------|-------------------------|-------------|
-|name               |     string              |    -        |
-|steps              |     list[Step]          |    []       |
-|image              |     string              |    `null`   |
-|executor           |     string              |    docker   |
-|executor_options   |     Executor            |    {}       |
-|shell              |     string              |    `null`   |
-|parameters         |     dict[string]string  |    {}       |
-|working_directory  |     string              |    `null`   |
-|parallelism        |     integer             |    1        |
-|environment        |     dict[string]string  |    {}       |
-|resource_class     |     string              |    `null`   |
-|circleci_ip_ranges |     bool                |    false    |
-
-```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local jobs = circleci.dsl.jobs;
-
-jobs.new(
-    'build',
-    image="ubuntu:20.04",
-    steps=[
-        steps.checkout(),
-        steps.run('echo "Hello World!"', name='Hello, World'),
-    ]
-),
-```
-
-### Job Executor Options
-
-`dsl.circleci.executors.[docker, machine, macos, windows]`
 
 #### Docker
 
@@ -523,7 +525,8 @@ local const = full_dsl.circleci.constants;
 
 steps.when(
     condition={
-        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]},
+        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]
+    },
     steps=[steps.run('echo "This is my favourite schedule!"')]
 )
 ```
@@ -543,7 +546,8 @@ local steps = full_dsl.circleci.steps;
 
 steps.unless(
     condition={
-        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]},
+        'equal': ['my-fave-schedule', const.pipeline_values.schedule_name]
+    },
     steps=[steps.run('echo "This is my favourite schedule!"')]
 )
 ```
