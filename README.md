@@ -127,8 +127,7 @@ If you're looking to learn more about writing Jsonnet, [there's a very nice tuto
 ## Minimal
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local dsl = full_dsl.circleci;
+local dsl = import '_dsl.libsonnet';
 
 local jobs = dsl.jobs;
 local pipeline = dsl.pipeline;
@@ -170,8 +169,7 @@ pipeline.new(
 **Example:**
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local dsl = full_dsl.circleci;
+local dsl = import '_dsl.libsonnet';
 
 local jobs = dsl.jobs;
 local pipeline = dsl.pipeline;
@@ -214,8 +212,8 @@ pipeline.new(
 |jobs    |    list[Job]  |     -         |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local workflows = full_dsl.circleci.workflows;
+local dsl = import '_dsl.libsonnet';
+local workflows = dsl.workflows;
 
 workflows.new(
     "example-workflow",
@@ -248,8 +246,7 @@ workflows.new(
 |circleci_ip_ranges |     bool                |    false    |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local dsl = full_dsl.circleci;
+local dsl = import '_dsl.libsonnet';
 
 local steps = dsl.steps;
 local workflows = dsl.workflows;
@@ -277,8 +274,8 @@ workflows.job(
 |ignore    |    list[string]    |  []      |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local workflows = full_dsl.circleci.workflows;
+local dsl = import '_dsl.libsonnet';
+local workflows = dsl.workflows;
 
 workflows.new(
     "example-workflow",
@@ -304,8 +301,8 @@ workflows.new(
 |ignore    |    list[string]    |  []      |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local workflows = full_dsl.circleci.workflows;
+local dsl = import '_dsl.libsonnet';
+local workflows = dsl.workflows;
 
 workflows.new(
     "example-workflow",
@@ -325,8 +322,8 @@ workflows.new(
 ### Multiple Filters
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local workflows = full_dsl.circleci.workflows;
+local dsl = import '_dsl.libsonnet';
+local workflows = dsl.workflows;
 
 workflows.new(
     "example-workflow",
@@ -360,8 +357,8 @@ workflows.new(
 
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local workflows = full_dsl.circleci.workflows;
+local dsl = import '_dsl.libsonnet';
+local workflows = dsl.workflows;
 
 workflows.new(
     "example-workflow",
@@ -396,9 +393,9 @@ workflows.new(
 |aws_auth    |   dict[string]string   |    {}          |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local jobs = circleci.dsl.jobs;
-local executors = circleci.dsl.executors;
+local dsl = import '_dsl.libsonnet';
+local jobs = dsl.jobs;
+local executors = dsl.executors;
 
 jobs.new(
     'build',
@@ -424,9 +421,9 @@ jobs.new(
 |docker_layer_caching  |   bool     |    false     |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local jobs = circleci.dsl.jobs;
-local executors = circleci.dsl.executors;
+local dsl = import '_dsl.libsonnet';
+local jobs = dsl.jobs;
+local executors = dsl.executors;
 
 jobs.new(
     'build',
@@ -448,8 +445,8 @@ jobs.new(
 |xcode                 |   string   |    -         |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local jobs = circleci.dsl.jobs;
+local dsl = import '_dsl.libsonnet';
+local jobs = dsl.jobs;
 
 jobs.new(
     'build',
@@ -471,8 +468,8 @@ The windows executor has no options.
 #### Custom Executor (e.g. from an orb)
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local jobs = circleci.dsl.jobs;
+local dsl = import '_dsl.libsonnet';
+local jobs = dsl.jobs;
 
 
 // orbs.new({ python: 'circleci/python@0.2.1' })
@@ -506,8 +503,8 @@ jobs.new(
 
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.run('echo "Hello, World!", no_output_timeout="30m)
 ```
@@ -522,9 +519,9 @@ steps.run('echo "Hello, World!", no_output_timeout="30m)
 `dsl.circleci.steps.when`
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
-local const = full_dsl.circleci.constants;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
+local const = dsl.constants;
 
 steps.when(
     condition={
@@ -544,8 +541,8 @@ steps.when(
 |when               |    string|dict          |    -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.unless(
     condition={
@@ -560,8 +557,8 @@ steps.unless(
 `dsl.circleci.steps.checkout`
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.checkout()
 ```
@@ -576,8 +573,8 @@ steps.checkout()
 |docker_layer_caching    | bool      |  false           |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.setup_remote_docker()
 ```
@@ -592,9 +589,9 @@ steps.setup_remote_docker()
 |paths  |   list[string]  |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
-local const = full_dsl.circleci.constants;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
+local const = dsl.constants;
 
 steps.save_cache(
     key='v1' + const.cache_vars.checksum('testfile.txt'),
@@ -611,9 +608,9 @@ steps.save_cache(
 |key    |   string        |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
-local const = full_dsl.circleci.constants;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
+local const = dsl.constants;
 
 steps.restore_cache('v1' + const.cache_vars.checksum('testfile.txt'))
 ```
@@ -628,8 +625,8 @@ steps.restore_cache('v1' + const.cache_vars.checksum('testfile.txt'))
 |destination   |   string        |  `null`   |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.store_artifacts('/my-artifacts-folders/')
 ```
@@ -643,8 +640,8 @@ steps.store_artifacts('/my-artifacts-folders/')
 |path   |   string        |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.store_test_results('/my-artifacts-folders/')
 ```
@@ -659,8 +656,8 @@ steps.store_test_results('/my-artifacts-folders/')
 |paths   |   list[string]  |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.persist_to_workspace(
     root='/my-project',
@@ -677,8 +674,8 @@ steps.persist_to_workspace(
 |at      |   string        |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.attach_workspace('/my-project/important-folder')
 ```
@@ -692,8 +689,8 @@ steps.attach_workspace('/my-project/important-folder')
 |fingerprints      |   list[string]  |  -        |
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
-local steps = full_dsl.circleci.steps;
+local dsl = import '_dsl.libsonnet';
+local steps = dsl.steps;
 
 steps.add_ssh_keys()
 ```
@@ -714,9 +711,9 @@ steps.add_ssh_keys()
 
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
+local dsl = import '_dsl.libsonnet';
 local pipeline = dsl.pipeline;
-local executors = full_dsl.circleci.executors;
+local executors = dsl.executors;
 
 pipeline.new(
     executors=[
@@ -733,9 +730,9 @@ pipeline.new(
 ## Orbs
 
 ```jsonnet
-local full_dsl = import '_dsl.libsonnet';
+local dsl = import '_dsl.libsonnet';
 local pipeline = dsl.pipeline;
-local orbs = full_dsl.circleci.orbs;
+local orbs = dsl.orbs;
 
 pipeline.new(
     orbs=orbs.new({ python: 'circleci/python@0.2.1' }),

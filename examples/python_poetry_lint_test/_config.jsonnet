@@ -1,6 +1,4 @@
-local full_dsl = import '_dsl.libsonnet';
-local dsl = full_dsl.circleci;
-
+local dsl = import '_dsl.libsonnet';
 
 local jobs = dsl.jobs;
 local pipeline = dsl.pipeline;
