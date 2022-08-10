@@ -66,6 +66,11 @@ local route_executor(executor_type, executor_options) = executors[executor_type]
             large: 'large',
             xlarge: 'xlarge',
             xxlarge: '2xlarge',
+            
+            arm_medium: 'arm.medium',
+            arm_large: 'arm.large',
+            arm.xlarge: 'arm.xlarge',
+            arm_xxlarge: 'arm.2xlarge',
         },
 
         macos: {
