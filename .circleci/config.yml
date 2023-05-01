@@ -37,3 +37,10 @@ workflows:
       - build-image
       - generate-config:
           requires: ['build-image']
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /.*/

@@ -114,7 +114,14 @@ jobs:
 workflows:
   setup-workflow:
     jobs:
-      - generate-config
+      - generate-config:
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /.*/
 ```
 
 # Examples
