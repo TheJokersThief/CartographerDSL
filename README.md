@@ -283,7 +283,7 @@ workflows.new(
 )
 ```
 
-### Filter: Branches
+### Filter: Tags
 
 `dsl.circleci.workflows.filter_tags`
 
