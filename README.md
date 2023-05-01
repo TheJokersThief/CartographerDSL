@@ -29,7 +29,7 @@ A domain specific language for defining CircleCI pipelines.
         - [Job](#job)
         - [Job Executor Options](#job-executor-options)
         - [Filter: Branches](#filter-branches)
-        - [Filter: Branches](#filter-branches)
+        - [Filter: Tags](#filter-tags)
         - [Multiple Filters](#multiple-filters)
         - [Matrix](#matrix)
             - [Docker](#docker)
