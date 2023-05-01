@@ -33,8 +33,9 @@ pipeline.new(
 
                 orbs.circleci.docker.jobs.publish(
                     image=docker_image,
-                    tag='$CIRCLE_SHA1,$CIRCLE_BRANCH',
+                    tag='$CIRCLE_SHA1,$CIRCLE_BRANCH,latest',
                     requires=['build','test'],
+                    filters=workflows.filter_branches(only=['main']),
                     docker_password='DOCKERHUB_PASSWORD',
                     before_build=[
                         steps.attach_workspace('/tmp/dist'),
