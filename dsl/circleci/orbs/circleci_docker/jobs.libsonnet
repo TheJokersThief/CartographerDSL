@@ -35,7 +35,6 @@
             'docker/publish': {
                 'requires': requires,
                 'context': context,
-                'filters': filters,
                 'matrix': matrix,
                 'when': when,
                 'after_build': after_build,
@@ -63,6 +62,6 @@
                 'use-buildkit': use_buildkit,
                 'use-docker-credentials-store': use_docker_credentials_store,
                 'use-remote-docker': use_remote_docker,
-            },
+            } + filters,
     },
 }
