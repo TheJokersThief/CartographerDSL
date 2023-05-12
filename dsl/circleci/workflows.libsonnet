@@ -52,7 +52,7 @@ local prefixAllJobs(array, prefix) = std.map(
         local list_of_jobs = util.as_array(jobs);
         {
             workflows +: { [name]: { jobs: prefixAllJobs(list_of_jobs, name + "_") } },
-            jobs: util.foldArrayOfObjects(
+            jobs +: util.foldArrayOfObjects(
                 prefixAllJobs(
                     extractJobs(list_of_jobs, '_jobs'),
                     name + "_",

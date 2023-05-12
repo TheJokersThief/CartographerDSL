@@ -22,6 +22,10 @@
     foldTwoObjects(last, current)::
         last + std.prune(current),
 
-    foldArrayOfObjects(array)::
-        std.foldl(self.foldTwoObjects, array, {}),
+    foldTwoObjectsNoPrune(last, current)::
+        last + current,
+
+    foldArrayOfObjects(array, prune=true)::
+        if prune then std.foldl(self.foldTwoObjects, array, {}) else std.foldl(self.foldTwoObjectsNoPrune, array, {}),
+
 }
