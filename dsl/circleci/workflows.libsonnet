@@ -97,13 +97,13 @@ local prefixAllJobs(array, prefix) = std.map(
                 circleci_ip_ranges=circleci_ip_ranges,
             ),
 
-            [name]: {
+            [name]: std.prune({
                 name: name,
                 requires: requires,
                 context: context,
                 matrix: matrix,
                 when: when,
-            } + filters,
+            }) + filters,
         },
 
     filter_branches(
