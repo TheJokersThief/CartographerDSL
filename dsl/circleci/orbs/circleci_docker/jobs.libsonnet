@@ -32,7 +32,7 @@
         use_docker_credentials_store=false,
         use_remote_docker=false,
     ):: {
-            'docker/publish': {
+            'docker/publish': std.prune({
                 'requires': requires,
                 'context': context,
                 'matrix': matrix,
@@ -62,6 +62,6 @@
                 'use-buildkit': use_buildkit,
                 'use-docker-credentials-store': use_docker_credentials_store,
                 'use-remote-docker': use_remote_docker,
-            } + filters,
+            }) + filters,
     },
 }
